@@ -45,38 +45,38 @@ def lambda_handler(event, context):
         # リクエストボディの解析
         body = json.loads(event['body'])
         message = body['message']
-        conversation_history = body.get('conversationHistory', [])
+        #conversation_history = body.get('conversationHistory', [])
         
-        print("Processing message:", message)
+        #print("Processing message:", message)
         #print("Using model:", MODEL_ID)
         
         # 会話履歴を使用
-        messages = conversation_history.copy()
+        # messages = conversation_history.copy()
         
         # ユーザーメッセージを追加
-        messages.append({
-            "role": "user",
-            "content": message
-        })
+        #messages.append({
+        #    "role": "user",
+        #    "content": message
+        #})
         
         # Nova Liteモデル用のリクエストペイロードを構築
         # 会話履歴を含める
         bedrock_messages = []
-        for msg in messages:
-            if msg["role"] == "user":
-                bedrock_messages.append({
-                    "role": "user",
-                    "content": [{"text": msg["content"]}]
-                })
-            elif msg["role"] == "assistant":
-                bedrock_messages.append({
-                    "role": "assistant", 
-                    "content": [{"text": msg["content"]}]
-                })
+        #for msg in messages:
+        #    if msg["role"] == "user":
+        #        bedrock_messages.append({
+        #            "role": "user",
+        #            "content": [{"text": msg["content"]}]
+        #        })
+        #    elif msg["role"] == "assistant":
+        #        bedrock_messages.append({
+        #            "role": "assistant", 
+        #            "content": [{"text": msg["content"]}]
+        #        })
         
         # invoke_model用のリクエストペイロード
         request_payload = {
-            "prompt": bedrock_messages,
+            "prompt": message,
             "max_new_tokens": 512,
             "do_sample": true,
             "temperature": 0.7,
