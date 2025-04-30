@@ -22,7 +22,7 @@ bedrock_client = None
 MODEL_ID = os.environ.get("MODEL_ID", "us.amazon.nova-lite-v1:0")
 
 # Google Colab上で動作しているAPIエンドポイント
-API_ENDPOINT = "https://0392-35-222-44-151.ngrok-free.app"  # 必要に応じてエンドポイントを変更
+API_ENDPOINT = "https://b8ca-35-222-44-151.ngrok-free.app"  # 必要に応じてエンドポイントを変更
 
 
 def lambda_handler(event, context):
@@ -76,13 +76,11 @@ def lambda_handler(event, context):
         
         # invoke_model用のリクエストペイロード
         request_payload = {
-            "messages": bedrock_messages,
-            "inferenceConfig": {
-                "maxTokens": 512,
-                "stopSequences": [],
-                "temperature": 0.7,
-                "topP": 0.9
-            }
+            "prompt": bedrock_messages,
+            "max_new_tokens": 512,
+            "do_sample": true,
+            "temperature": 0.7,
+            "top_p": 0.9
         }
         
         print("Calling Bedrock invoke_model API with payload:", json.dumps(request_payload))
