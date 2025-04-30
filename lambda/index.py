@@ -22,7 +22,7 @@ bedrock_client = None
 MODEL_ID = os.environ.get("MODEL_ID", "us.amazon.nova-lite-v1:0")
 
 # Google Colab上で動作しているAPIエンドポイント
-API_ENDPOINT = "https://1eeb-35-222-44-151.ngrok-free.app"  # 必要に応じてエンドポイントを変更
+API_ENDPOINT = "https://0392-35-222-44-151.ngrok-free.app"  # 必要に応じてエンドポイントを変更
 
 
 def lambda_handler(event, context):
