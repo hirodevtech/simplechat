@@ -4,6 +4,7 @@ import os
 import boto3
 import re  # 正規表現モジュールをインポート
 from botocore.exceptions import ClientError
+import urllib.request
 
 
 # Lambda コンテキストからリージョンを抽出する関数
@@ -19,6 +20,10 @@ bedrock_client = None
 
 # モデルID
 MODEL_ID = os.environ.get("MODEL_ID", "us.amazon.nova-lite-v1:0")
+
+# Google Colab上で動作しているAPIエンドポイント
+API_ENDPOINT = "https://1eeb-35-222-44-151.ngrok-free.app"  # 必要に応じてエンドポイントを変更
+
 
 def lambda_handler(event, context):
     try:
@@ -43,7 +48,7 @@ def lambda_handler(event, context):
         conversation_history = body.get('conversationHistory', [])
         
         print("Processing message:", message)
-        print("Using model:", MODEL_ID)
+        #print("Using model:", MODEL_ID)
         
         # 会話履歴を使用
         messages = conversation_history.copy()
@@ -84,7 +89,7 @@ def lambda_handler(event, context):
         
         # invoke_model APIを呼び出し
         response = bedrock_client.invoke_model(
-            modelId=MODEL_ID,
+            modelId=API_ENDPOINT,
             body=json.dumps(request_payload),
             contentType="application/json"
         )
