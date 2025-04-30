@@ -24,7 +24,6 @@ MODEL_ID = os.environ.get("MODEL_ID", "us.amazon.nova-lite-v1:0")
 # Google Colab上で動作しているAPIエンドポイント
 API_ENDPOINT = "https://b8ca-35-222-44-151.ngrok-free.app/generate"  # 必要に応じてエンドポイントを変更
 
-
 def lambda_handler(event, context):
     try:
         # コンテキストから実行リージョンを取得し、クライアントを初期化
@@ -87,9 +86,17 @@ def lambda_handler(event, context):
         
         # invoke_model APIを呼び出し
         response = bedrock_client.invoke_model(
-            modelId=API_ENDPOINT,
+            modelId=MODEL_ID,
             body=json.dumps(request_payload),
             contentType="application/json"
+        )
+        
+        api_response = urllib.request.urlopen(
+            urllib.request.Request(
+                API_ENDPOINT,
+                data=json.dumps(request_payload).encode('utf-8'),
+                headers={"Content-Type": "application/json"}
+            )
         )
         
         # レスポンスを解析
@@ -141,3 +148,5 @@ def lambda_handler(event, context):
                 "error": str(error)
             })
         }
+
+
